@@ -18,6 +18,8 @@ const Line = ({
   size = 16,
   stroke = 'currentcolor',
   strokeWidth = 3,
+  strokeLinejoin = 'square',
+  strokeLinecap = 'butt',
   style,
   m,
   mt,
@@ -43,17 +45,27 @@ const Line = ({
     }),
     style
   }
+  
+  const doViewBox = (strokeWidth) => {
+    const c = 2;
+    const base = 16;
+    const pos = (strokeWidth - c) / -c;
+    const size = strokeWidth + base - c;
+    return `${pos} ${pos} ${size} ${size}`;
+  }
 
   return (
     <svg
       {...props}
       xmlns='http://www.w3.org/2000/svg'
-      viewBox='0 0 16 16'
+      viewBox={doViewBox(strokeWidth)}
       width={size}
       height={size}
       fill='none'
       stroke={stroke}
       strokeWidth={strokeWidth}
+      strokeLinejoin={strokeLinejoin}
+      strokeLinecap={strokeLinecap}
       style={sx}>
       {path && <path d={line(...path)} />}
       {paths.map((p, i) => (
@@ -70,4 +82,3 @@ const Line = ({
 }
 
 export default Line
-
